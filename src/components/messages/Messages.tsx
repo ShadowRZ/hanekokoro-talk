@@ -16,7 +16,7 @@ export function Messages (): JSX.Element {
   }
 
   return (
-    <div class='overflow-scroll flex-initial grow px-1 pt-1 flex flex-col gap-2'>
+    <div class='overflow-auto flex-initial grow px-1 pt-1 flex flex-col gap-2'>
       {context.messages.value.map((item, idx) => {
         if (isNarrator(item.characterIdx)) return <NarrratorItem idx={idx} item={item.message as TalkContentText} />
         return <MessageItem key={idx} message={item} idx={idx} />

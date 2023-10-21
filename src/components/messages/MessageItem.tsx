@@ -64,7 +64,7 @@ function MessageContent ({ content }: { content: TalkContent }): JSX.Element {
   switch (content.type) {
     case 'text':
       return (
-        <div class='w-fit break-all rounded-lg bg-orange-600 p-2 text-white'>
+        <div style={{ overflowWrap: 'anywhere' }} class='w-fit rounded-lg bg-orange-600 p-2 text-white'>
           {content.content}
         </div>
       )
