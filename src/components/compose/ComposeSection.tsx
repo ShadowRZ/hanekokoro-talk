@@ -42,15 +42,29 @@ export function ComposeSection (): JSX.Element {
 
   const updateEnabledState = (): void => {
     const content = contentRef.current?.innerText
-    setEnabled(content !== undefined && content !== '')
+    setEnabled(content !== undefined && content.trim() !== '')
+  }
+
+  const onInput = (): void => {
+    const content = contentRef.current?.innerText
+    if (content === '\n' && contentRef.current !== null) contentRef.current.innerHTML = ''
+    updateEnabledState()
+  }
+
+  const onKeyDown = (ev: KeyboardEvent): void => {
+    if (ev.key === 'Enter') {
+      ev.preventDefault()
+      if (enabled) sendTalkItem()
+    }
   }
 
   return (
     <div class='box-content min-h-12 flex items-stretch gap-2 p-1'>
       <CharPopover />
       <div class='flex items-center min-h-full w-full max-w-full rounded-lg border-2 border-gray-400 focus-within:border-orange-600'>
-        <span
-          onInput={updateEnabledState}
+        <div
+          onInput={onInput}
+          onKeyDown={onKeyDown}
           ref={contentRef}
           contenteditable
           data-placeholder={placeholder.value}
