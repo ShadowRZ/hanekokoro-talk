@@ -10,7 +10,7 @@ export default function AboutAction (): JSX.Element {
     <div>
       <button
         onClick={() => setOpen(true)}
-        class='pointer-events-auto w-12 h-12 flex justify-center items-center rounded-xl transition duration-200 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-900 text-orange-600'
+        class='pointer-events-auto w-12 h-12 flex justify-center items-center rounded-xl transition duration-200 bg-white/75 dark:bg-black/75 hover:bg-gray-100 dark:hover:bg-gray-900 text-orange-600'
       >
         <span class='w-8 h-8 icon-[solar--info-circle-bold-duotone]' />
       </button>
