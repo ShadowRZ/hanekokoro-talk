@@ -80,9 +80,8 @@ export function ComposeSection (): JSX.Element {
           onKeyDown={onKeyDown}
           ref={contentRef}
           contenteditable
-          data-placeholder={placeholder}
           style={{ overflowWrap: 'anywhere' }}
-          class={clsx('block m-2 grow break-all outline-none hover:cursor-text after:text-gray-500', 'empty:after:content-[attr(data-placeholder)]')}
+          class={clsx('block m-2 grow break-all outline-none hover:cursor-text after:text-gray-500', 'empty:after:content-[attr(aria-placeholder)]')}
         />
       </div>
       <div class='grow flex flex-row shrink-0 items-end'>
