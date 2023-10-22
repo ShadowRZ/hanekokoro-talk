@@ -9,6 +9,7 @@ export default function AboutAction (): JSX.Element {
   return (
     <div>
       <button
+        title='About'
         onClick={() => setOpen(true)}
         class='pointer-events-auto w-12 h-12 flex justify-center items-center rounded-xl transition duration-200 bg-white/75 dark:bg-black/75 hover:bg-gray-100 dark:hover:bg-gray-900 text-orange-600'
       >
