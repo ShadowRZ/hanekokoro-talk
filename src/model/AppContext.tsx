@@ -8,6 +8,7 @@ interface IAppContext {
   messages: Signal<TalkItem[]>
   characters: Signal<TalkCharacter[]>
   lastIndex: Signal<number>
+  sending: Signal<'enter' | 'ctrl-enter'>
   // Local States
   showAddCharDialog: Signal<boolean>
   touchElement: Signal<null | HTMLElement>
@@ -21,6 +22,7 @@ const createAppContext = (): IAppContext => {
   const messages = signal(JSON.parse(localStorage.getItem('hanekokoro-talk-messages') ?? '[]') as TalkItem[])
   const characters = signal(JSON.parse(localStorage.getItem('hanekokoro-talk-characters') ?? '[]') as TalkCharacter[])
   const lastIndex = signal(parseInt(localStorage.getItem('hanekokoro-talk-lastindex') ?? '0'))
+  const sending = signal(localStorage.getItem('hanekokoro-talk-sending') as ('enter' | 'ctrl-enter') ?? 'enter')
   const shownCharacters = computed(() => {
     return [TALK_NARRATOR, ...characters.value]
   })
@@ -30,6 +32,7 @@ const createAppContext = (): IAppContext => {
     messages,
     characters,
     lastIndex,
+    sending,
     // Derived States
     shownCharacters,
     // Local States

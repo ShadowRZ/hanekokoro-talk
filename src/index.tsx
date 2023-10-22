@@ -44,6 +44,8 @@ export function HanekokoroTalk (): JSX.Element {
     localStorage.setItem('hanekokoro-talk-characters', JSON.stringify(context.characters.value))
     // Update Last Index
     localStorage.setItem('hanekokoro-talk-lastindex', context.lastIndex.value.toString())
+    // Update sending method
+    localStorage.setItem('hanekokoro-talk-sending', context.sending.value)
   })
 
   const handleTouch = (ev: TouchEvent): void => {

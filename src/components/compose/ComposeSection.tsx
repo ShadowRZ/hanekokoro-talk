@@ -53,8 +53,15 @@ export function ComposeSection (): JSX.Element {
 
   const onKeyDown = (ev: KeyboardEvent): void => {
     if (ev.key === 'Enter') {
-      ev.preventDefault()
-      if (enabled) sendTalkItem()
+      // Supports Shift + Enter
+      if (ev.shiftKey) return
+      if (context.sending.value === 'enter' && !ev.ctrlKey) {
+        ev.preventDefault()
+        if (enabled) sendTalkItem()
+      } else if (context.sending.value === 'ctrl-enter' && ev.ctrlKey) {
+        ev.preventDefault()
+        if (enabled) sendTalkItem()
+      }
     }
   }
 
