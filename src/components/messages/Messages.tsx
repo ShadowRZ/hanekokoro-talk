@@ -17,11 +17,21 @@ export function Messages (): JSX.Element {
 
   return (
     <div class='overflow-auto flex-initial grow px-1 pt-1 flex flex-col gap-2'>
-      {context.messages.value.map((item, idx) => {
-        if (isNarrator(item.characterIdx)) return <NarrratorItem idx={idx} item={item.message as TalkContentText} />
-        return <MessageItem key={idx} message={item} idx={idx} />
-      })}
+      {context.messages.value.length !== 0
+        ? context.messages.value.map((item, idx) => {
+          if (isNarrator(item.characterIdx)) return <NarrratorItem idx={idx} item={item.message as TalkContentText} />
+          return <MessageItem key={idx} message={item} idx={idx} />
+        })
+        : <Placeholder />}
       <div ref={setRef} />
+    </div>
+  )
+}
+
+function Placeholder (): JSX.Element {
+  return (
+    <div class='w-full h-full flex items-center justify-center'>
+      <span class='text-2xl text-gray-300 dark:text-gray-700'>Write something!</span>
     </div>
   )
 }
