@@ -30,8 +30,8 @@ export function Messages (): JSX.Element {
 
 function Placeholder (): JSX.Element {
   return (
-    <div class='w-full h-full flex items-center justify-center'>
-      <span class='text-2xl text-gray-300 dark:text-gray-700'>Write something!</span>
+    <div class='pointer-events-none w-full h-full flex items-center justify-center'>
+      <span class='font-bold text-2xl text-gray-500'>Write something!</span>
     </div>
   )
 }

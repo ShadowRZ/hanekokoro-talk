@@ -10,7 +10,6 @@
     "lint": "ts-standard"
   },
   "dependencies": {
-    "@mui/base": "^5.0.0-beta.19",
     "@preact/signals": "^1.2.1",
     "clsx": "^2.0.0",
     "preact": "^10.13.1",
