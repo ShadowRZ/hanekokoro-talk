@@ -63,11 +63,17 @@ export function ComposeSection (): JSX.Element {
       <CharPopover />
       <div class='flex items-center min-h-full w-full max-w-full rounded-lg border-2 border-gray-400 focus-within:border-orange-600'>
         <div
+          id='compose-section'
+          role='textbox'
+          aria-multiline={false}
+          aria-placeholder={placeholder}
+          aria-label={placeholder}
+          tabindex={0}
           onInput={onInput}
           onKeyDown={onKeyDown}
           ref={contentRef}
           contenteditable
-          data-placeholder={placeholder.value}
+          data-placeholder={placeholder}
           style={{ overflowWrap: 'anywhere' }}
           class={clsx('block m-2 grow break-all outline-none hover:cursor-text after:text-gray-500', 'empty:after:content-[attr(data-placeholder)]')}
         />
