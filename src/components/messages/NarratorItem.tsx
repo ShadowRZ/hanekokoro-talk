@@ -32,7 +32,7 @@ export function NarrratorItem ({ item, idx }: { item: TalkContentText, idx: numb
         <span class='px-2 py-1 rounded-lg bg-gray-300 dark:bg-gray-700 text-black dark:text-white'>
           {item.content}
         </span>
-        <MessageActions messageIdx={idx} className={clsx('absolute right-0 -top-10', { hidden: !open })} />
+        <MessageActions messageIdx={idx} className={clsx('absolute right-0 -bottom-10', { hidden: !open })} />
       </div>
     </div>
   )

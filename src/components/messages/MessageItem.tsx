@@ -24,7 +24,7 @@ export function MessageItem ({ message, idx }: { message: TalkItem, idx: number 
   return (
     <div
       ref={ref}
-      class='flex flex-row gap-2'
+      class='relative flex flex-row gap-2'
       onMouseOverCapture={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
       onFocus={() => setOpen(true)}
@@ -36,12 +36,12 @@ export function MessageItem ({ message, idx }: { message: TalkItem, idx: number 
       <div class='-translate-y-1 grow flex flex-col'>
         <div>
           <span class='font-bold'>{message.nameOverride ?? shownCharacters.value[message.characterIdx].name}</span>
-          <div class='relative w-fit'>
+          <div class='w-fit'>
             <MessageContent content={message.message} />
-            <MessageActions messageIdx={idx} className={clsx('absolute right-0 -top-10', { hidden: !open })} />
           </div>
         </div>
       </div>
+      <MessageActions messageIdx={idx} className={clsx('absolute left-14 -bottom-8', { hidden: !open })} />
     </div>
   )
 }
