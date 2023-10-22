@@ -15,11 +15,16 @@ export default function AboutAction (): JSX.Element {
       >
         <span class='w-8 h-8 icon-[solar--info-circle-bold-duotone]' />
       </button>
-      <Dialog open={open} handleClose={() => setOpen(false)}>
-        <h2 className='text-2xl font-bold leading-6 text-gray-900 dark:text-gray-100'>
+      <Dialog
+        open={open}
+        handleClose={() => setOpen(false)}
+        aria-labelledby='about-label'
+        aria-describedby='about-desc'
+      >
+        <h2 id='about-label' className='text-2xl font-bold leading-6 text-gray-900 dark:text-gray-100'>
           Hanekokoro Talk
         </h2>
-        <p class='text-gray-700 dark:text-gray-300'>
+        <p id='about-desc' class='text-gray-700 dark:text-gray-300'>
           Version 0.1.0
         </p>
         <div className='mt-2'>

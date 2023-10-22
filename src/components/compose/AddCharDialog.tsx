@@ -34,11 +34,17 @@ export default function AddCharDialog ({ open, onClose }: { open: boolean, onClo
   }, [onClose])
 
   return (
-    <Dialog open={open} handleClose={onClose} className='w-[32rem]'>
-      <h2 className='text-2xl font-bold leading-6 text-gray-900 dark:text-gray-100'>
+    <Dialog
+      open={open}
+      handleClose={onClose}
+      className='w-[32rem]'
+      aria-labelledby='addchar-label'
+      aria-describedby='addchar-desc'
+    >
+      <h2 id='addchar-label' className='text-2xl font-bold leading-6 text-gray-900 dark:text-gray-100'>
         Add a character
       </h2>
-      <p class='text-gray-700 dark:text-gray-300'>
+      <p id='addchar-desc' class='text-gray-700 dark:text-gray-300'>
         Add a new character to Hanekokoro Talk.
       </p>
       <Divider />

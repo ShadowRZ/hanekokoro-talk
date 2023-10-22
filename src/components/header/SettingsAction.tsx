@@ -18,11 +18,17 @@ export default function SettingsAction (): JSX.Element {
       >
         <span class='w-8 h-8 icon-[solar--settings-bold-duotone]' />
       </button>
-      <Dialog open={open} handleClose={() => setOpen(false)} className='w-[32rem]'>
-        <h2 className='text-2xl font-bold leading-6 text-gray-900 dark:text-gray-100'>
+      <Dialog
+        open={open}
+        handleClose={() => setOpen(false)}
+        className='w-[32rem]'
+        aria-labelledby='settings-label'
+        aria-describedby='settings-desc'
+      >
+        <h2 id='settings-label' className='text-2xl font-bold leading-6 text-gray-900 dark:text-gray-100'>
           Settings
         </h2>
-        <p class='text-gray-700 dark:text-gray-300'>
+        <p id='settings-desc' class='text-gray-700 dark:text-gray-300'>
           Changes will take effect immediately.
         </p>
         <Divider />

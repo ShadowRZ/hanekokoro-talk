@@ -55,7 +55,7 @@ export function UploadButton (): JSX.Element {
           { 'cursor-not-allowed': disableUpload.value }
         )}
       >
-        <span class='w-6 h-6 icon-[solar--upload-minimalistic-bold-duotone]' />
+        <span aria-hidden class='w-6 h-6 icon-[solar--upload-minimalistic-bold-duotone]' />
       </button>
       <input ref={ref} onChange={onChange} type='file' accept='image/*' class='hidden' />
     </>

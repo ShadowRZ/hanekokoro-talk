@@ -9,7 +9,7 @@ interface DialogProps {
   className?: string
 }
 
-export default function Dialog ({ open, handleClose, children, className = 'w-[24rem]' }: DialogProps): JSX.Element {
+export default function Dialog ({ open, handleClose, children, className = 'w-[24rem]', ...other }: DialogProps): JSX.Element {
   const ref = useRef<HTMLDialogElement>(null)
   const [shown, setShown] = useState(false)
 
@@ -52,6 +52,7 @@ export default function Dialog ({ open, handleClose, children, className = 'w-[2
           'backdrop:bg-transparent', className,
           shown ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
         )}
+        {...other}
       >
         {children}
       </dialog>
