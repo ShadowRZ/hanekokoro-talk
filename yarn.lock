@@ -543,21 +543,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.26.1":
-  version: 0.26.1
-  resolution: "@floating-ui/react@npm:0.26.1"
-  dependencies:
-    "@floating-ui/react-dom": ^2.0.2
-    "@floating-ui/utils": ^0.1.5
-    tabbable: ^6.0.1
-  peerDependencies:
-    react: ">=16.8.0"
-    react-dom: ">=16.8.0"
-  checksum: e89fda56735027dd635ca46baaec31c2c7abfbd772855db2f22dad9a320b67bb01cea8f75e1bdab8d82f8cb4a5dd3c60c608e1e242a23cdc781c8c5856634e4c
-  languageName: node
-  linkType: hard
-
-"@floating-ui/utils@npm:^0.1.3, @floating-ui/utils@npm:^0.1.5":
+"@floating-ui/utils@npm:^0.1.3":
   version: 0.1.6
   resolution: "@floating-ui/utils@npm:0.1.6"
   checksum: b34d4b5470869727f52e312e08272edef985ba5a450a76de0917ba0a9c6f5df2bdbeb99448e2c60f39b177fb8981c772ff1831424e75123471a27ebd5b52c1eb
@@ -869,7 +855,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@shadowrz/hanekokoro-talk@workspace:."
   dependencies:
-    "@floating-ui/react": ^0.26.1
     "@fontsource/jost": ^5.0.13
     "@iconify-json/solar": ^1.1.5
     "@iconify/tailwind": ^0.1.3
@@ -4628,13 +4613,6 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
-  languageName: node
-  linkType: hard
-
-"tabbable@npm:^6.0.1":
-  version: 6.2.0
-  resolution: "tabbable@npm:6.2.0"
-  checksum: f8440277d223949272c74bb627a3371be21735ca9ad34c2570f7e1752bd646ccfc23a9d8b1ee65d6561243f4134f5fbbf1ad6b39ac3c4b586554accaff4a1300
   languageName: node
   linkType: hard
 

@@ -1,7 +1,6 @@
 import { JSX } from 'preact'
 import { TalkContent, TalkItem } from '../../model/TalkModels'
 import { CharAvatar } from '../utils/CharAvatar'
-import { useFloating, autoUpdate, size, flip } from '@floating-ui/react-dom'
 import { useRef, useState } from 'preact/hooks'
 import { MessageActions } from './MessageActions'
 import clsx from 'clsx'
@@ -13,21 +12,6 @@ export function MessageItem ({ message, idx }: { message: TalkItem, idx: number 
   const shownCharacters = context.shownCharacters
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-
-  const { refs, floatingStyles } = useFloating({
-    placement: 'bottom-end',
-    open,
-    transform: false,
-    whileElementsMounted: autoUpdate,
-    middleware: [flip(), size({
-      apply ({ availableWidth, availableHeight, elements }: { availableWidth: number, availableHeight: number, elements: any }) {
-        Object.assign(elements.floating.style, {
-          maxWidth: `${availableWidth - 4}px`,
-          maxHeight: `${availableHeight}px`
-        })
-      }
-    })]
-  })
 
   useSignalEffect(() => {
     if (ref.current?.contains(context.touchElement.value) ?? false) {
@@ -52,10 +36,12 @@ export function MessageItem ({ message, idx }: { message: TalkItem, idx: number 
       <div class='-translate-y-1 grow flex flex-col'>
         <div>
           <span class='font-bold'>{message.nameOverride ?? shownCharacters.value[message.characterIdx].name}</span>
-          <div class='w-fit' ref={refs.setReference}><MessageContent content={message.message} /></div>
+          <div class='relative w-fit'>
+            <MessageContent content={message.message} />
+            <MessageActions messageIdx={idx} className={clsx('absolute right-0 -top-10', { hidden: !open })} />
+          </div>
         </div>
       </div>
-      <MessageActions messageIdx={idx} ref={refs.setFloating} style={floatingStyles} className={clsx({ hidden: !open })} />
     </div>
   )
 }

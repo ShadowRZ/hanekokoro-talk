@@ -1,12 +1,6 @@
-import {
-  useFloating,
-  autoUpdate,
-  size
-} from '@floating-ui/react-dom'
-import { useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { JSX } from 'preact'
 import { PopupTransition } from '../transitions/PopupTransition'
-import { ClickAwayListener } from '@mui/base/ClickAwayListener'
 import { PopoverContent } from './PopoverContent'
 import { TALK_NARRATOR } from '../../model/TalkModels'
 import { CharAvatar } from '../utils/CharAvatar'
@@ -20,6 +14,7 @@ export function CharPopover (): JSX.Element {
   const [shown, setShown] = useState(false)
   const [current, setCurrent] = useState(TALK_NARRATOR)
   const [openAddCharDialog, setOpenAddCharDialog] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
   const shownCharacters = context.shownCharacters
 
@@ -35,43 +30,37 @@ export function CharPopover (): JSX.Element {
     setShown(shown)
   }
 
-  const { refs, floatingStyles } = useFloating({
-    placement: 'top-start',
-    open,
-    whileElementsMounted: autoUpdate,
-    middleware: [size({
-      apply ({ availableWidth, availableHeight, elements }: { availableWidth: number, availableHeight: number, elements: any }) {
-        Object.assign(elements.floating.style, {
-          maxWidth: `${availableWidth - 4}px`,
-          maxHeight: `${availableHeight}px`
-        })
-      }
-    })]
+  const onClick = (ev: KeyboardEvent): void => {
+    if (open && !(ref.current?.contains(ev.target as HTMLElement) ?? false)) {
+      updateShown(false)
+    }
+  }
+
+  useEffect(() => {
+    if (open) document.addEventListener('click', onClick)
+    return () => {
+      document.removeEventListener('click', onClick)
+    }
   })
 
   return (
-    <ClickAwayListener onClickAway={() => updateShown(false)}>
-      <div class='grow flex flex-row shrink-0 items-end'>
-        <button ref={refs.setReference} onClick={() => { updateShown(!shown) }}>
-          <CharAvatar character={current} />
-        </button>
-        <div
-          ref={refs.setFloating}
-          style={floatingStyles}
-        >
-          {open && (
-            <PopupTransition
-              in={shown}
-              duration={200}
-              onExited={() => setOpen(false)}
-              className='z-10 p-1 rounded-lg bg-white dark:bg-gray-950 shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5'
-            >
-              <PopoverContent />
-            </PopupTransition>
-          )}
+    <div class='grow flex flex-row shrink-0 items-end'>
+      <button onClick={() => { updateShown(!shown) }}>
+        <CharAvatar character={current} />
+      </button>
+      {open && (
+        <div ref={ref} class='absolute bottom-14 left-0 mx-1'>
+          <PopupTransition
+            in={shown}
+            duration={200}
+            onExited={() => setOpen(false)}
+            className='z-10 p-1 rounded-lg bg-white dark:bg-gray-950 shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5'
+          >
+            <PopoverContent />
+          </PopupTransition>
         </div>
-        <AddCharDialog open={openAddCharDialog} onClose={() => { context.showAddCharDialog.value = false }} />
-      </div>
-    </ClickAwayListener>
+      )}
+      <AddCharDialog open={openAddCharDialog} onClose={() => { context.showAddCharDialog.value = false }} />
+    </div>
   )
 }
