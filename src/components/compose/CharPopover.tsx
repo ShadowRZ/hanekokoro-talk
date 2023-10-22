@@ -64,7 +64,7 @@ export function CharPopover (): JSX.Element {
               in={shown}
               duration={200}
               onExited={() => setOpen(false)}
-              className='z-20 p-1 rounded-lg bg-white dark:bg-gray-950 shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5'
+              className='z-10 p-1 rounded-lg bg-white dark:bg-gray-950 shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5'
             >
               <PopoverContent />
             </PopupTransition>

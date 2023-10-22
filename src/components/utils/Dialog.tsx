@@ -1,9 +1,6 @@
-import { Modal } from '@mui/base/Modal'
 import clsx from 'clsx'
-import { ComponentChildren, JSX, Ref } from 'preact'
-import { forwardRef } from 'preact/compat'
-import { Fade } from '../transitions/Fade'
-import { ModalTransition } from '../transitions/ModalTransition'
+import { ComponentChildren, JSX } from 'preact'
+import { useEffect, useRef, useState } from 'preact/compat'
 
 interface DialogProps {
   open: boolean
@@ -12,52 +9,52 @@ interface DialogProps {
   className?: string
 }
 
-export default function Dialog ({ open, handleClose, children, className = 'max-w-sm' }: DialogProps): JSX.Element {
+export default function Dialog ({ open, handleClose, children, className = 'w-[24rem]' }: DialogProps): JSX.Element {
+  const ref = useRef<HTMLDialogElement>(null)
+  const [shown, setShown] = useState(false)
+
+  useEffect(() => {
+    if (open) {
+      ref.current?.showModal()
+      setShown(true)
+    } else {
+      setShown(false)
+    }
+  }, [open])
+
+  const onTransitionEnd = (): void => {
+    if (!open) ref.current?.close()
+  }
+
+  const onKeyDown = (ev: KeyboardEvent): void => {
+    if (ev.key === 'Escape') {
+      ev.preventDefault()
+      setShown(false)
+      handleClose()
+    }
+  }
+
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      closeAfterTransition
-      className='z-40 fixed inset-0 flex items-center justify-center p-4'
-      slots={{ backdrop: StyledBackdrop }}
+    <div
+      class={clsx(
+        'z-40 p-4 fixed inset-0 flex items-center justify-center bg-black/50 transition duration-200',
+        shown ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+      )}
+      role='presentation'
     >
-      <ModalTransition
-        in={open}
-        duration={200}
-        className={clsx('duration-200 z-20 w-full p-4 rounded-lg bg-white dark:bg-black shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5', className)}
+      <dialog
+        ref={ref}
+        onTransitionEnd={onTransitionEnd}
+        onKeyDown={onKeyDown}
+        class={clsx(
+          'fixed transition duration-200 inset-0 p-4 appearance-none rounded-lg',
+          'bg-white dark:bg-black shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5',
+          'backdrop:bg-transparent', className,
+          shown ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        )}
       >
         {children}
-      </ModalTransition>
-    </Modal>
+      </dialog>
+    </div>
   )
 }
-
-const StyledBackdrop = forwardRef((props: BackdropProps, ref: Ref<HTMLDivElement>) => {
-  const { open, className, ...other } = props
-  return (
-    <Backdrop
-      open={open}
-      className={clsx('fixed inset-0 bg-black/50', className)}
-      ref={ref}
-      aria-hidden='true'
-      {...other}
-    />
-  )
-})
-
-interface BackdropProps {
-  open: boolean
-  className: string
-}
-
-const Backdrop = forwardRef((props: BackdropProps, ref: Ref<HTMLDivElement>) => {
-  const { open, className, ...other } = props
-  return (
-    <Fade in={open} className={className} duration={200}>
-      <div
-        ref={ref}
-        {...other}
-      />
-    </Fade>
-  )
-})

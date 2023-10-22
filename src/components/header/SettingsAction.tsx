@@ -17,7 +17,7 @@ export default function SettingsAction (): JSX.Element {
       >
         <span class='w-8 h-8 icon-[solar--settings-bold-duotone]' />
       </button>
-      <Dialog open={open} handleClose={() => setOpen(false)} className='max-w-lg'>
+      <Dialog open={open} handleClose={() => setOpen(false)} className='w-[32rem]'>
         <h2 className='text-2xl font-bold leading-6 text-gray-900 dark:text-gray-100'>
           Settings
         </h2>

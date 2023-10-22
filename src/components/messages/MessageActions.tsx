@@ -13,7 +13,7 @@ export const MessageActions = forwardRef((props: { style?: any, className?: stri
     <div
       ref={ref}
       class={clsx(
-        'overflow-hidden fixed w-fit z-40 p-1 rounded-lg bg-white dark:bg-gray-950 shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5 flex flex-row gap-2',
+        'overflow-hidden fixed w-fit z-30 p-1 rounded-lg bg-white dark:bg-gray-950 shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5 flex flex-row gap-2',
         props.className
       )}
       style={props.style}

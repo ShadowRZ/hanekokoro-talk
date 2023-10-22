@@ -34,7 +34,7 @@ export default function AddCharDialog ({ open, onClose }: { open: boolean, onClo
   }, [onClose])
 
   return (
-    <Dialog open={open} handleClose={onClose} className='max-w-lg'>
+    <Dialog open={open} handleClose={onClose} className='w-[32rem]'>
       <h2 className='text-2xl font-bold leading-6 text-gray-900 dark:text-gray-100'>
         Add a character
       </h2>
