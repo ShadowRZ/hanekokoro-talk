@@ -1,10 +1,10 @@
 import { JSX } from 'preact'
 import { TalkContent, TalkItem } from '../../model/TalkModels'
 import { CharAvatar } from '../utils/CharAvatar'
-import { useRef, useState } from 'preact/hooks'
+import { useEffect, useRef, useState } from 'preact/hooks'
 import { MessageActions } from './MessageActions'
-import clsx from 'clsx'
 import { useAppContext } from '../../model/AppContext'
+import { PopupTransition } from '../transitions/PopupTransition'
 import { useSignalEffect } from '@preact/signals'
 
 export function MessageItem ({ message, idx }: { message: TalkItem, idx: number }): JSX.Element {
@@ -12,12 +12,30 @@ export function MessageItem ({ message, idx }: { message: TalkItem, idx: number 
   const shownCharacters = context.shownCharacters
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
+  const popupRef = useRef<HTMLDivElement>(null)
+
+  const onClick = (ev: KeyboardEvent): void => {
+    if (open && !(popupRef.current?.contains(ev.target as HTMLElement) ?? false)) {
+      setOpen(false)
+    }
+  }
 
   useSignalEffect(() => {
-    if (ref.current?.contains(context.touchElement.value) ?? false) {
+    if (ref.current?.contains(context.contextElement.value) ?? false) {
       setOpen(true)
     } else {
       setOpen(false)
+    }
+  })
+
+  useEffect(() => {
+    if (!open) context.contextElement.value = null
+  }, [open])
+
+  useEffect(() => {
+    if (open) document.addEventListener('click', onClick)
+    return () => {
+      document.removeEventListener('click', onClick)
     }
   })
 
@@ -25,8 +43,6 @@ export function MessageItem ({ message, idx }: { message: TalkItem, idx: number 
     <div
       ref={ref}
       class='relative flex flex-row gap-2'
-      onMouseOverCapture={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
       onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
     >
@@ -41,7 +57,17 @@ export function MessageItem ({ message, idx }: { message: TalkItem, idx: number 
           </div>
         </div>
       </div>
-      <MessageActions messageIdx={idx} className={clsx('absolute left-14 -bottom-8', { hidden: !open })} />
+      <PopupTransition
+        in={open}
+        duration={200}
+        onExited={() => setOpen(false)}
+        className='absolute z-50 transition duration-200 left-14 bottom-0'
+      >
+        <MessageActions
+          ref={popupRef}
+          messageIdx={idx}
+        />
+      </PopupTransition>
     </div>
   )
 }

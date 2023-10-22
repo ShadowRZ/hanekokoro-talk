@@ -48,15 +48,9 @@ export function HanekokoroTalk (): JSX.Element {
     localStorage.setItem('hanekokoro-talk-sending', context.sending.value)
   })
 
-  const handleTouch = (ev: TouchEvent): void => {
-    context.touchElement.value = ev.target as HTMLElement
-  }
-
   return (
     <AppContext.Provider value={context}>
       <div
-        onTouchStart={handleTouch}
-        onTouchEnd={handleTouch}
         class='h-[100dvh] max-h-[100dvh] flex flex-col bg-white dark:bg-black text-black dark:text-white'
       >
         <Header />

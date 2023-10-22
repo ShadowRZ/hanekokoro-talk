@@ -11,12 +11,20 @@ export function Messages (): JSX.Element {
     return shownCharacters.value[idx].isNarrator
   }
 
+  const onContextMenu = (ev: Event): void => {
+    context.contextElement.value = ev.target as HTMLElement
+    ev.preventDefault()
+  }
+
   const setRef = (ref: HTMLDivElement | null): void => {
     context.messagesRef.value = ref
   }
 
   return (
-    <div class='overflow-auto flex-initial grow px-1 pt-1 flex flex-col gap-2'>
+    <div
+      onContextMenuCapture={onContextMenu}
+      class='overflow-auto flex-initial grow px-1 pt-1 flex flex-col gap-2'
+    >
       {context.messages.value.length !== 0
         ? context.messages.value.map((item, idx) => {
           if (isNarrator(item.characterIdx)) return <NarrratorItem idx={idx} item={item.message as TalkContentText} />

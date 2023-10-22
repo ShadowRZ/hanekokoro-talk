@@ -11,7 +11,7 @@ interface IAppContext {
   sending: Signal<'enter' | 'ctrl-enter'>
   // Local States
   showAddCharDialog: Signal<boolean>
-  touchElement: Signal<null | HTMLElement>
+  contextElement: Signal<null | HTMLElement>
   messagesRef: Signal<HTMLDivElement | null>
   // Derived States
   shownCharacters: ReadonlySignal<TalkCharacter[]>
@@ -37,7 +37,7 @@ const createAppContext = (): IAppContext => {
     shownCharacters,
     // Local States
     showAddCharDialog: signal(false),
-    touchElement: signal(null),
+    contextElement: signal(null),
     messagesRef: signal(null)
   }
 }
