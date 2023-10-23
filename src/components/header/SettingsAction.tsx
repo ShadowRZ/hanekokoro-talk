@@ -86,7 +86,7 @@ function SettingsPanel (): JSX.Element {
         <ThemeToggle />
       </SettingsItem>
       <SettingsItem title='Sending message' description='Specify how to send the message.'>
-        <div class='flex flex-col gap-0.5 my-1'>
+        <div class='text-gray-900 dark:text-gray-100 flex flex-col gap-0.5 my-1'>
           <div class='flex flex-row gap-1'>
             <input checked={isEnter} type='radio' id='sending-enter' name='sending' value='enter' onChange={onChange} />
             <label for='sending-enter'><kbd>Enter</kbd> to send, <kbd>Ctrl</kbd> + <kbd>Enter</kbd> for newline</label>
