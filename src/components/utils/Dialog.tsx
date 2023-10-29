@@ -47,7 +47,7 @@ export default function Dialog ({ open, handleClose, children, className = 'w-[2
         onTransitionEnd={onTransitionEnd}
         onKeyDown={onKeyDown}
         class={clsx(
-          'fixed transition duration-200 inset-0 p-4 appearance-none rounded-lg',
+          'fixed transition duration-200 inset-0 p-4 appearance-none rounded-lg overflow-y-scroll',
           'bg-white dark:bg-black shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5',
           'backdrop:bg-transparent overflow-hidden', className,
           shown ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
