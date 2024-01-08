@@ -6,6 +6,7 @@ import { UploadButton } from './popover/UploadButton'
 import { useAppContext } from '../../model/AppContext'
 import { useSignalEffect } from '@preact/signals'
 import { StickerPanel } from './popover/StickerPanel'
+import { GroupsPanel } from './popover/GroupsPanel'
 
 export function PopoverContent (): JSX.Element {
   const [stickerDisabled, setStickerDisabled] = useState(true)
@@ -23,14 +24,18 @@ export function PopoverContent (): JSX.Element {
         <Tab title='Characters' className='w-8 h-8' selected={selected === 1} onClick={() => setSelected(1)}>
           <span aria-hidden class='w-6 h-6 icon-[solar--user-rounded-bold-duotone]' />
         </Tab>
-        <Tab disabled={stickerDisabled} title='Stickers' selected={selected === 2} className='w-8 h-8' onClick={() => setSelected(2)}>
+        <Tab title='Character Groups' selected={selected === 2} className='w-8 h-8' onClick={() => setSelected(2)}>
+          <span aria-hidden class='w-6 h-6 icon-[solar--users-group-two-rounded-bold-duotone]' />
+        </Tab>
+        <Tab disabled={stickerDisabled} title='Stickers' selected={selected === 3} className='w-8 h-8' onClick={() => setSelected(3)}>
           <span aria-hidden class='w-6 h-6 icon-[solar--sticker-smile-circle-bold-duotone]' />
         </Tab>
         <div class='grow' />
         <UploadButton />
       </div>
       <TabPanel shown={selected === 1}><CharPanel /></TabPanel>
-      <TabPanel shown={selected === 2}><StickerPanel /></TabPanel>
+      <TabPanel shown={selected === 2}><GroupsPanel /></TabPanel>
+      <TabPanel shown={selected === 3}><StickerPanel /></TabPanel>
     </div>
   )
 }

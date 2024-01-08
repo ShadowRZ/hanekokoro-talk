@@ -6,7 +6,9 @@ import { TALK_NARRATOR } from '../../model/TalkModels'
 import { CharAvatar } from '../utils/CharAvatar'
 import { useAppContext } from '../../model/AppContext'
 import { useSignalEffect } from '@preact/signals'
-import AddCharDialog from './AddCharDialog'
+import AddCharDialog from './dialogs/AddCharDialog'
+import AddGroupDialog from './dialogs/AddGroupDialog'
+import EditGroupDialog from './dialogs/EditGroupDialog'
 
 export function CharPopover (): JSX.Element {
   const context = useAppContext()
@@ -14,6 +16,9 @@ export function CharPopover (): JSX.Element {
   const [shown, setShown] = useState(false)
   const [current, setCurrent] = useState(TALK_NARRATOR)
   const [openAddCharDialog, setOpenAddCharDialog] = useState(false)
+  const [openAddGroupDialog, setOpenAddGroupDialog] = useState(false)
+  const [openEditGroupDialog, setOpenEditGroupDialog] = useState(false)
+  const [transitionEnd, setTransitionEnd] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
   const shownCharacters = context.shownCharacters
@@ -21,9 +26,18 @@ export function CharPopover (): JSX.Element {
   useSignalEffect(() => {
     setCurrent(shownCharacters.value[context.lastIndex.value])
     const openAddCharDialog = context.showAddCharDialog.value
-    if (openAddCharDialog) updateShown(false)
+    const openAddGroupDialog = context.showAddGroupDialog.value
+    const openEditGroupDialog = context.showEditGruopDialog.value !== null
+    if (openAddCharDialog || openAddGroupDialog || openEditGroupDialog) updateShown(false)
     setOpenAddCharDialog(openAddCharDialog)
+    setOpenAddGroupDialog(openAddGroupDialog)
+    setOpenEditGroupDialog(openEditGroupDialog)
   })
+
+  useEffect(() => {
+    if (transitionEnd) context.showEditGruopDialog.value = null
+    setTransitionEnd(false)
+  }, [transitionEnd])
 
   function updateShown (shown: boolean): void {
     setOpen(true)
@@ -61,6 +75,15 @@ export function CharPopover (): JSX.Element {
         </div>
       )}
       <AddCharDialog open={openAddCharDialog} onClose={() => { context.showAddCharDialog.value = false }} />
+      <AddGroupDialog open={openAddGroupDialog} onClose={() => { context.showAddGroupDialog.value = false }} />
+      {context.showEditGruopDialog.value !== null
+        ? <EditGroupDialog
+            id={context.showEditGruopDialog.value}
+            open={openEditGroupDialog}
+            onClose={() => { setOpenEditGroupDialog(false) }}
+            onTransitionEnd={() => { if (!openEditGroupDialog) setTransitionEnd(true) }}
+          />
+        : <></>}
     </div>
   )
 }

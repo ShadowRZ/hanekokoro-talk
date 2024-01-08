@@ -5,11 +5,12 @@ import { useEffect, useRef, useState } from 'preact/compat'
 interface DialogProps {
   open: boolean
   handleClose: any
+  handleTransitionEnd?: any
   children: ComponentChildren
   className?: string
 }
 
-export default function Dialog ({ open, handleClose, children, className = 'w-[24rem]', ...other }: DialogProps): JSX.Element {
+export default function Dialog ({ open, handleClose, handleTransitionEnd = () => {}, children, className = 'w-[24rem]', ...other }: DialogProps): JSX.Element {
   const ref = useRef<HTMLDialogElement>(null)
   const [shown, setShown] = useState(false)
 
@@ -24,6 +25,7 @@ export default function Dialog ({ open, handleClose, children, className = 'w-[2
 
   const onTransitionEnd = (): void => {
     if (!open) ref.current?.close()
+    handleTransitionEnd()
   }
 
   const onKeyDown = (ev: KeyboardEvent): void => {
@@ -47,7 +49,7 @@ export default function Dialog ({ open, handleClose, children, className = 'w-[2
         onTransitionEnd={onTransitionEnd}
         onKeyDown={onKeyDown}
         class={clsx(
-          'fixed transition duration-200 inset-0 p-4 appearance-none rounded-lg overflow-y-scroll',
+          'fixed transition duration-200 inset-0 p-4 appearance-none rounded-lg overflow-y-auto',
           'bg-white dark:bg-black shadow-lg ring-1 ring-black dark:ring-white/10 ring-opacity-5',
           'backdrop:bg-transparent overflow-hidden', className,
           shown ? 'opacity-100 scale-100' : 'opacity-0 scale-95'

@@ -18,7 +18,12 @@ export function ComposeSection (): JSX.Element {
     if (character.isNarrator) {
       return 'Write something...'
     } else {
-      return `Write as ${character.name}...`
+      if (context.lastGroup.value != null) {
+        const groupName = context.charGroups.value[context.lastGroup.value].name
+        return `Write as ${character.name} @${groupName}...`
+      } else {
+        return `Write as ${character.name}...`
+      }
     }
   })
 
@@ -30,7 +35,8 @@ export function ComposeSection (): JSX.Element {
       message: {
         type: 'text',
         content
-      }
+      },
+      charGroup: context.lastGroup.value ?? undefined
     }
     context.messages.value = [...context.messages.value, item]
     setTimeout(() => {

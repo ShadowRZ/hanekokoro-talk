@@ -8,13 +8,16 @@ export function CharPanel (): JSX.Element {
   const shownCharacters = context.shownCharacters
 
   return (
-    <div class='p-1 flex flex-row flex-wrap gap-4'>
+    <div class='p-1 flex flex-row flex-wrap gap-4 shrink'>
       {shownCharacters.value.map((value, idx) => {
         return (
           <button
-            class={clsx('shrink-0 rounded-full w-12 h-12 ring-orange-600', { 'ring-1': context.lastIndex.value === idx })}
+            class={clsx('shrink-0 rounded-full w-12 h-12 ring-orange-600', { 'ring-2': context.lastIndex.value === idx && context.lastGroup.value === null })}
             key={idx}
-            onClick={() => { context.lastIndex.value = idx }}
+            onClick={() => {
+              context.lastIndex.value = idx
+              context.lastGroup.value = null
+            }}
           >
             <CharAvatar character={value} />
           </button>

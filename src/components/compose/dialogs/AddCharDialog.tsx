@@ -1,13 +1,14 @@
 import { JSX } from 'preact'
-import Dialog from '../utils/Dialog'
-import Divider from '../utils/Divider'
-import { Button } from '../utils/Button'
-import { SubmitButton } from '../utils/SubmitButton'
+import Dialog from '../../utils/Dialog'
+import Divider from '../../utils/Divider'
+import { Button } from '../../utils/Button'
+import { SubmitButton } from '../../utils/SubmitButton'
 import { useCallback, useRef } from 'preact/hooks'
-import { TalkCharacter } from '../../model/TalkModels'
-import { resizeImageAsUrl } from '../../utils/FileUtils'
-import { useAppContext } from '../../model/AppContext'
+import { TalkCharacter } from '../../../model/TalkModels'
+import { resizeImageAsUrl } from '../../../utils/FileUtils'
+import { useAppContext } from '../../../model/AppContext'
 import clsx from 'clsx'
+import { DialogItem } from './DialogItem'
 
 export default function AddCharDialog ({ open, onClose }: { open: boolean, onClose: any }): JSX.Element {
   const form = useRef<HTMLFormElement>(null)
@@ -29,9 +30,17 @@ export default function AddCharDialog ({ open, onClose }: { open: boolean, onClo
         }
         context.characters.value = [...context.characters.value, char]
         onClose()
+        form.current.reset()
       }
     })()
   }, [onClose])
+
+  const onDialogClose = (): void => {
+    if (form.current !== null) {
+      onClose()
+      form.current.reset()
+    }
+  }
 
   return (
     <Dialog
@@ -52,33 +61,17 @@ export default function AddCharDialog ({ open, onClose }: { open: boolean, onClo
         <AddCharDialogPanel />
         <div class='flex flex-row gap-2 mt-2'>
           <SubmitButton value='Save' />
-          <Button onClick={onClose}>Close</Button>
+          <Button onClick={onDialogClose}>Close</Button>
         </div>
       </form>
     </Dialog>
   )
 }
 
-function AddCharDialogItem ({ title, description, labelFor, children }): JSX.Element {
-  return (
-    <div class='flex flex-row gap-2'>
-      <div class='grow'>
-        <h3 className='text-lg font-bold leading-6 text-gray-900 dark:text-gray-100'>
-          <label for={labelFor}>{title}</label>
-        </h3>
-        <p class='text-gray-700 dark:text-gray-300'>
-          {description}
-        </p>
-        {children}
-      </div>
-    </div>
-  )
-}
-
 function AddCharDialogPanel (): JSX.Element {
   return (
     <div class='flex flex-col gap-2'>
-      <AddCharDialogItem labelFor='name' title='Character Name' description='Specify the character name.'>
+      <DialogItem labelFor='name' title='Character Name' description='Specify the character name.'>
         <div class='rounded-lg border-2 border-gray-400 focus-within:border-orange-600 my-1 p-2'>
           <input
             type='text'
@@ -88,8 +81,8 @@ function AddCharDialogPanel (): JSX.Element {
             class='w-full outline-none bg-transparent'
           />
         </div>
-      </AddCharDialogItem>
-      <AddCharDialogItem labelFor='avatar' title='Character Avatar' description='Specify the character avatar.'>
+      </DialogItem>
+      <DialogItem labelFor='avatar' title='Character Avatar' description='Specify the character avatar.'>
         <input
           type='file'
           id='avatar'
@@ -101,7 +94,7 @@ function AddCharDialogPanel (): JSX.Element {
             'file:transition file:duration-200 file:border-none file:text-orange-700 file:hover:text-orange-50 file:px-4 file:py-2 file:hover:cursor-pointer'
           )}
         />
-      </AddCharDialogItem>
+      </DialogItem>
     </div>
   )
 }

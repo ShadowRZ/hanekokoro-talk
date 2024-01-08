@@ -10,6 +10,7 @@ import { useSignalEffect } from '@preact/signals'
 export function MessageItem ({ message, idx }: { message: TalkItem, idx: number }): JSX.Element {
   const context = useAppContext()
   const shownCharacters = context.shownCharacters
+  const charGroups = context.charGroups
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const popupRef = useRef<HTMLDivElement>(null)
@@ -51,7 +52,10 @@ export function MessageItem ({ message, idx }: { message: TalkItem, idx: number 
       </div>
       <div class='-translate-y-1 grow flex flex-col'>
         <div>
-          <span class='font-bold'>{message.nameOverride ?? shownCharacters.value[message.characterIdx].name}</span>
+          <span class='font-bold flex flex-row gap-1'>
+            <span>{message.nameOverride ? message.nameOverride : shownCharacters.value[message.characterIdx].name /* eslint-disable-line @typescript-eslint/strict-boolean-expressions */}</span>
+            {message.charGroup !== undefined ? <span class='text-gray-400'>@{charGroups.value[message.charGroup].name}</span> : <></>}
+          </span>
           <div class='w-fit'>
             <MessageContent content={message.message} />
           </div>

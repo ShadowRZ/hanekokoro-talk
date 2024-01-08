@@ -42,8 +42,17 @@ export function HanekokoroTalk (): JSX.Element {
     localStorage.setItem('hanekokoro-talk-messages', JSON.stringify(context.messages.value))
     // Update characters
     localStorage.setItem('hanekokoro-talk-characters', JSON.stringify(context.characters.value))
+    // Update groups
+    localStorage.setItem('hanekokoro-talk-char-groups', JSON.stringify(context.charGroups.value))
     // Update Last Index
     localStorage.setItem('hanekokoro-talk-lastindex', context.lastIndex.value.toString())
+    // Update Last Group
+    console.log(context.lastGroup.value)
+    if (context.lastGroup.value !== null) {
+      localStorage.setItem('hanekokoro-talk-lastgroup', context.lastGroup.value.toString())
+    } else {
+      localStorage.setItem('hanekokoro-talk-lastgroup', '')
+    }
     // Update sending method
     localStorage.setItem('hanekokoro-talk-sending', context.sending.value)
   })
