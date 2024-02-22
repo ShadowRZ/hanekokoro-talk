@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "svelte.svelte-vscode",
+    "dbaeumer.vscode-eslint",
+    "antfu.iconify",
+    "esbenp.prettier-vscode",
+    "antfu.unocss"
+  ]
+}
